@@ -1,138 +1,117 @@
-var userObj={
-    firstName: 'Николь',
-    lastName: 'Иопель',
-    age: 18,
-    fullName: function(){
-        return (userObj.firstName + ' ' + userObj.lastName);
-    }
-}
-
-console.log(userObj.fullName());
-
-function defUpperStr(string){
-    return (string || 'default text').toUpperCase();
-}
-
-console.log(defUpperStr());
-console.log(defUpperStr('My text'));
 
 
-function evenFn(n){
-    var arr =[];
+let counter = function(){
+    let count = 0;
 
-    for(var i=1; i<=n; i++){
-        if(i%2===0){
-           arr.push(i);
-        }
-    }
-    return arr;
-}
+    return function(n){
+    
+        count = n === undefined ? count : n;
 
-console.log(evenFn(20));
-
-
-function weekFn(n) {
-    var day = '';
+        return count++;
   
-    switch (n) {
-      case 1:
-        day = 'Понедельник';
-        break;
-      case 2:
-        day = 'Вторник';
-        break;
-      case 3:
-        day = 'Среда';
-        break;
-      case 4:
-        day = 'Четверг';
-        break;
-      case 5:
-        day = 'Пятница';
-        break;
-      case 6:
-        day = 'Суббота';
-        break;
-      case 7:
-        day = 'Воскресенье';
-        break;
-      default:
-        day = null;
     }
+}();
+
+console.log(counter());
+console.log(counter(5));
+
+let counting = function(){
+  let count = 0;
+  return {
+    value(n) {
+      if (n !== undefined) count = n;
+
+      return count;
+    },
+
+      increment(){
+        count++;
+      },
+
+      decrement() {
+        count--;
+      }
+    };
+  }();
+
+  console.log(counting.value()); 
+  counting.increment();
+  counting.increment();
+  counting.increment();
+  console.log(counting.value()); 
+  counting.decrement();
+  counting.decrement();
+  console.log(counting.value());
+
+
+ let myPrint =(a,b,res) => `${a}^${b}=${res}`;
+
+ let myPow = (a, b, callback) =>{
+   let pow = (x,n) =>
+   {
+     if (n!==1) return x = x * pow(x, n-1)
+     return x;
+   }
+   return callback(a, b, pow(a,b));
+ }
+
+ console.log(myPow(3, 3, myPrint)); 
+console.log(myPow(5, 3, myPrint)); 
   
-    return day;
+let yearNow = new Date().getFullYear();
+
+let car={
+  engine: 1500,
+  model: 'GS 300',
+  name: 'Lexus',
+  year: 2008,
+  info(){
+    return `${this.name} ${this.model}, ${this.engine}cc, year ${this.year}, ${this.used}`;
+  },
+
+  get used(){
+    return this.year !== yearNow ? 'used' : 'new';
+  },
+
+  set used(value){
+    if(value === 'new' && this.year !== yearNow) this.year =  yearNow;
+
   }
+};
+
+console.log(car.info());
+car.used = 'new';
+console.log(car.info());
+
+
+let arr = [1,122, 45, 23 ,44];
+let myMax = (arr) => {
+  return Math.max.apply(null, arr);
   
-  console.log(weekFn(3));
-  console.log(weekFn(-7));
-
-
-
-function ageClassification(n){
-    return n>0
-        ? n>24
-            ? n>44
-                ? n>65
-                    ? n>75
-                        ? n>90
-                            ? n>122
-                                ?null
-                                : 'долгожители'
-              : 'старческий возраст'
-            : 'пожилой возраст'
-          : 'средний возраст'
-        : 'молодой возраст'
-      : 'детский возраст'
-    : null;
 }
 
-console.log(ageClassification(12));
-console.log(ageClassification(80));
-console.log(ageClassification(-7));
-console.log(ageClassification(75.5));
+console.log(myMax(arr));
+
+let myMul = (a,b) => a*b;
 
 
-function oddFn(n){
-  
-    var arr=[];
-    var i = 1;
-    while (i <= n) {
+ let myDouble = myMul.bind(null, 2);
+ let  myTriple = myMul.bind(null, 3);
 
-        if(i%2==1){
-
-            arr.push(i);
-        }
-        i++;
-    }
-
-    return arr;
-}
-
-console.log(oddFn(10));
+ console.log(myDouble(5)); 
+ console.log(myTriple(5)); 
 
 
-function mainFunc(a, b, func){
-    if(func && typeof func === 'function'){
-        return func(a,b)
-    }
-    else return false;
-}
+ let UnUnuque = [11, 22, 3, 4, 11, 3, 22];
 
-function cbRandom(a, b){
-    return Math.floor(Math.random() * (b - a+ 1)) + a;
-}
+ let myUniq =(arr) =>{
+   let set = new Set();
 
+   arr.forEach(value => {
+     set.add(value);
+   });
 
-function cbPow(a,b){
-    return Math.pow(a,b);
-}
+   return set;
+ }
 
-function cbAdd(a, b){
-    return a + b;
-}
-
-console.log(mainFunc(2, 5, cbRandom));
-console.log(mainFunc(10, 30, cbRandom));
-console.log(mainFunc(2, 5, cbPow));
-console.log(mainFunc(2, 5, cbAdd));
-console.log(mainFunc(2, 5, 'not a func'));
+ console.log(myUniq(UnUnuque));
